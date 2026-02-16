@@ -1,0 +1,81 @@
+plugins {
+    id 'fabric-loom' version '1.13.6'
+}
+
+// Version-specific dependency metadata
+def versionMeta = [
+    '1.21.4': [
+        yarn_mappings: '1.21.4+build.8',
+        fabric_version: '0.113.0+1.21.4',
+    ],
+    '1.21.11': [
+        yarn_mappings: '1.21.11+build.4',
+        fabric_version: '0.141.2+1.21.11',
+    ],
+]
+
+def mcVersion = project.minecraft_version
+def meta = versionMeta[mcVersion]
+if (meta == null) {
+    throw new GradleException("Unsupported minecraft_version: ${mcVersion}. Supported: ${versionMeta.keySet()}")
+}
+
+version = "${project.mod_version}+mc${mcVersion}"
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+loom {
+    splitEnvironmentSourceSets()
+
+    mods {
+        "intruderalerts" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+}
+
+// Add version-specific source directory to the client source set
+sourceSets {
+    client {
+        java {
+            srcDir "src/version/${mcVersion}/java"
+        }
+    }
+}
+
+repositories {
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${mcVersion}"
+    mappings "net.fabricmc:yarn:${meta.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${meta.fabric_version}"
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 21
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${project.archives_base_name}" }
+    }
+}

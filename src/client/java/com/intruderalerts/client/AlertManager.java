@@ -1,0 +1,42 @@
+package com.intruderalerts.client;
+
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.toast.SystemToast;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+
+public class AlertManager {
+
+    public void alert(String playerName) {
+        MinecraftClient client = MinecraftClient.getInstance();
+        if (client.player == null) {
+            return;
+        }
+
+        sendChatAlert(client, playerName);
+        sendToastAlert(client, playerName);
+        playSoundAlert(client);
+    }
+
+    private void sendChatAlert(MinecraftClient client, String playerName) {
+        Text message = Text.empty()
+                .append(Text.literal("[IntruderAlerts] ").formatted(Formatting.RED, Formatting.BOLD))
+                .append(Text.literal(playerName).formatted(Formatting.YELLOW))
+                .append(Text.literal(" entered your render distance!").formatted(Formatting.RED));
+
+        client.inGameHud.getChatHud().addMessage(message);
+    }
+
+    private void sendToastAlert(MinecraftClient client, String playerName) {
+        SystemToast.show(
+                client.getToastManager(),
+                SystemToast.Type.PERIODIC_NOTIFICATION,
+                Text.literal("IntruderAlerts"),
+                Text.literal(playerName + " is nearby!")
+        );
+    }
+
+    private void playSoundAlert(MinecraftClient client) {
+        SoundUtil.playAlert(client);
+    }
+}

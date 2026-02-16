@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "intruderalerts",
+  "version": "${version}",
+  "name": "IntruderAlerts",
+  "description": "Alerts you when untrusted players enter your render distance.",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.intruderalerts.IntruderAlerts"
+    ],
+    "client": [
+      "com.intruderalerts.client.IntruderAlertsClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.18.4",
+    "minecraft": ">=1.21.1",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
