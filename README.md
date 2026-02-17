@@ -14,7 +14,7 @@ A client-side Fabric mod that notifies you whenever an untrusted player enters y
 ## Supported Versions
 
 - Minecraft 1.21.4
-- Minecraft 1.21.1
+- Minecraft 1.21.11
 
 ## Dependencies
 
@@ -31,6 +31,7 @@ All commands use the `/intruder` prefix:
 | `/intruder untrust <player>` | Remove a player from your trust list |
 | `/intruder list` | Show all trusted players |
 | `/intruder toggle` | Enable or disable alerts |
+| `/intruder settings sounds toggle` | Enable or disable alert sounds |
 | `/intruder zone add <name>` | Create a safe zone at your current location |
 | `/intruder zone remove <name>` | Delete a safe zone |
 | `/intruder zone list` | Show all safe zones |
@@ -51,7 +52,7 @@ You'll only be alerted once per player — they won't trigger repeated alerts un
 ./gradlew build
 ```
 
-The output JAR will be in `build/libs/`. To switch Minecraft versions, change `minecraft_version` in `gradle.properties` to `1.21.4` or `1.21.1`.
+The output JAR will be in `build/libs/`. To switch Minecraft versions, change `minecraft_version` in `gradle.properties` to `1.21.4` or `1.21.11`.
 
 ## License
 
