@@ -19,5 +19,7 @@
   "intruderalerts.command.zone.exists": "Eine Zone namens %s existiert bereits.",
   "intruderalerts.command.zone.removed": "Ignorierte Zone entfernt: %s",
   "intruderalerts.command.zone.list_empty": "Keine ignorierten Zonen.",
-  "intruderalerts.command.zone.list_header": "Ignorierte Zonen:"
+  "intruderalerts.command.zone.list_header": "Ignorierte Zonen:",
+  "intruderalerts.command.settings.sounds.enabled": "Tonbenachrichtigungen aktiviert",
+  "intruderalerts.command.settings.sounds.disabled": "Tonbenachrichtigungen deaktiviert"
 }

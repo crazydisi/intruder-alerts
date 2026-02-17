@@ -17,9 +17,17 @@ import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.lit
 
 public class CommandRegistrar {
 
-    public static void register(TrustManager trustManager, PlayerTracker playerTracker, ZoneManager zoneManager) {
+    public static void register(TrustManager trustManager, PlayerTracker playerTracker, ZoneManager zoneManager, AlertManager alertManager, SettingsManager settingsManager) {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
             dispatcher.register(literal("intruder")
+                    .then(literal("demo")
+                            .then(argument("name", StringArgumentType.word())
+                                    .executes(ctx -> {
+                                        alertManager.alert(StringArgumentType.getString(ctx, "name"));
+                                        return 1;
+                                    })
+                            )
+                    )
                     .then(literal("trust")
                             .then(argument("name", StringArgumentType.word())
                                     .suggests(suggestOnlinePlayers())
@@ -43,6 +51,13 @@ public class CommandRegistrar {
                     )
                     .then(literal("toggle")
                             .executes(ctx -> executeToggle(ctx.getSource(), playerTracker))
+                    )
+                    .then(literal("settings")
+                            .then(literal("sounds")
+                                    .then(literal("toggle")
+                                            .executes(ctx -> executeSettingsSoundsToggle(ctx.getSource(), settingsManager))
+                                    )
+                            )
                     )
                     .then(literal("zone")
                             .then(literal("add")
@@ -196,6 +211,18 @@ public class CommandRegistrar {
             }
             return builder.buildFuture();
         };
+    }
+
+    private static int executeSettingsSoundsToggle(FabricClientCommandSource source, SettingsManager settingsManager) {
+        boolean enabled = settingsManager.toggleSound();
+
+        source.sendFeedback(Text.empty()
+                .append(Text.translatable("intruderalerts.prefix").formatted(Formatting.GREEN))
+                .append(enabled
+                        ? Text.translatable("intruderalerts.command.settings.sounds.enabled").formatted(Formatting.GREEN)
+                        : Text.translatable("intruderalerts.command.settings.sounds.disabled").formatted(Formatting.RED)));
+
+        return 1;
     }
 
     private static int executeZoneAdd(FabricClientCommandSource source, ZoneManager zoneManager, String name) {

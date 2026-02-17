@@ -7,6 +7,12 @@ import net.minecraft.util.Formatting;
 
 public class AlertManager {
 
+    private final SettingsManager settingsManager;
+
+    public AlertManager(SettingsManager settingsManager) {
+        this.settingsManager = settingsManager;
+    }
+
     public void alert(String playerName) {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.player == null) {
@@ -15,7 +21,9 @@ public class AlertManager {
 
         sendChatAlert(client, playerName);
         sendToastAlert(client, playerName);
-        playSoundAlert(client);
+        if (settingsManager.isSoundEnabled()) {
+            playSoundAlert(client);
+        }
     }
 
     private void sendChatAlert(MinecraftClient client, String playerName) {

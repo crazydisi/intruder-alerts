@@ -19,5 +19,7 @@
   "intruderalerts.command.zone.exists": "%s という名前のゾーンはすでに存在します。",
   "intruderalerts.command.zone.removed": "無視ゾーン %s を削除しました",
   "intruderalerts.command.zone.list_empty": "無視ゾーンはありません。",
-  "intruderalerts.command.zone.list_header": "無視ゾーン:"
+  "intruderalerts.command.zone.list_header": "無視ゾーン:",
+  "intruderalerts.command.settings.sounds.enabled": "サウンドアラートが有効",
+  "intruderalerts.command.settings.sounds.disabled": "サウンドアラートが無効"
 }

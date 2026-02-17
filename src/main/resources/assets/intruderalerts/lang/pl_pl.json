@@ -19,5 +19,7 @@
   "intruderalerts.command.zone.exists": "Strefa o nazwie %s już istnieje.",
   "intruderalerts.command.zone.removed": "Usunięto strefę ignorowania %s",
   "intruderalerts.command.zone.list_empty": "Brak stref ignorowania.",
-  "intruderalerts.command.zone.list_header": "Strefy ignorowania:"
+  "intruderalerts.command.zone.list_header": "Strefy ignorowania:",
+  "intruderalerts.command.settings.sounds.enabled": "Alerty dźwiękowe włączone",
+  "intruderalerts.command.settings.sounds.disabled": "Alerty dźwiękowe wyłączone"
 }

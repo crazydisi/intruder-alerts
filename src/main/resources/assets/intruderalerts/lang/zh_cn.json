@@ -19,5 +19,7 @@
   "intruderalerts.command.zone.exists": "名为 %s 的区域已存在。",
   "intruderalerts.command.zone.removed": "已移除忽略区域 %s",
   "intruderalerts.command.zone.list_empty": "没有忽略区域。",
-  "intruderalerts.command.zone.list_header": "忽略区域："
+  "intruderalerts.command.zone.list_header": "忽略区域：",
+  "intruderalerts.command.settings.sounds.enabled": "声音提醒已启用",
+  "intruderalerts.command.settings.sounds.disabled": "声音提醒已禁用"
 }

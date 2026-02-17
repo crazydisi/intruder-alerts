@@ -19,5 +19,7 @@
   "intruderalerts.command.zone.exists": "Зона з назвою %s вже існує.",
   "intruderalerts.command.zone.removed": "Видалено зону ігнорування %s",
   "intruderalerts.command.zone.list_empty": "Немає зон ігнорування.",
-  "intruderalerts.command.zone.list_header": "Зони ігнорування:"
+  "intruderalerts.command.zone.list_header": "Зони ігнорування:",
+  "intruderalerts.command.settings.sounds.enabled": "Звукові сповіщення увімкнено",
+  "intruderalerts.command.settings.sounds.disabled": "Звукові сповіщення вимкнено"
 }
