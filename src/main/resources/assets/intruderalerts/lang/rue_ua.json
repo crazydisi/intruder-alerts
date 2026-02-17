@@ -1,0 +1,23 @@
+{
+  "intruderalerts.prefix": "[IntruderAlerts] ",
+  "intruderalerts.alert.entered_render_distance": "%s ся появив недалеко!",
+  "intruderalerts.alert.toast.title": "IntruderAlerts",
+  "intruderalerts.alert.toast.body": "%s є близько!",
+  "intruderalerts.error.not_connected": "Не є пудключення ід серверови.",
+  "intruderalerts.error.not_in_world": "Ты не є у світови.",
+  "intruderalerts.error.player_not_in_tab": "Бавляча не найдено у спискови бавлячу: %s",
+  "intruderalerts.error.player_not_trusted": "Бавляча не найдено у спискови довіреных: %s",
+  "intruderalerts.error.zone_not_found": "Зону не найдено: %s",
+  "intruderalerts.command.trust.success": "Додано %s до довіреных.",
+  "intruderalerts.command.trust.already": "%s уже є у спискови довіреных.",
+  "intruderalerts.command.untrust.success": "Выдалено %s із списку довіреных.",
+  "intruderalerts.command.list.empty": "Не є довіреных бавлячу.",
+  "intruderalerts.command.list.header": "Довірены бавлячі:",
+  "intruderalerts.command.toggle.enabled": "Уключено",
+  "intruderalerts.command.toggle.disabled": "Выключено",
+  "intruderalerts.command.zone.added": "Додано зону ігнорованя %s",
+  "intruderalerts.command.zone.exists": "Зона з сяков назвов %s уже є.",
+  "intruderalerts.command.zone.removed": "Выдалено зону ігнорованя %s",
+  "intruderalerts.command.zone.list_empty": "Не є зон ігнорованя.",
+  "intruderalerts.command.zone.list_header": "Зоны ігнорованя:"
+}

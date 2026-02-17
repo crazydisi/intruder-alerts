@@ -1,0 +1,23 @@
+{
+  "intruderalerts.prefix": "[IntruderAlerts] ",
+  "intruderalerts.alert.entered_render_distance": "%s 出現在附近！",
+  "intruderalerts.alert.toast.title": "IntruderAlerts",
+  "intruderalerts.alert.toast.body": "%s 在附近！",
+  "intruderalerts.error.not_connected": "未連線至伺服器。",
+  "intruderalerts.error.not_in_world": "不在世界中。",
+  "intruderalerts.error.player_not_in_tab": "在玩家列表中找不到玩家：%s",
+  "intruderalerts.error.player_not_trusted": "在信任列表中找不到玩家：%s",
+  "intruderalerts.error.zone_not_found": "找不到區域：%s",
+  "intruderalerts.command.trust.success": "已信任 %s",
+  "intruderalerts.command.trust.already": "%s 已在信任列表中。",
+  "intruderalerts.command.untrust.success": "已將 %s 從信任列表中移除。",
+  "intruderalerts.command.list.empty": "沒有受信任的玩家。",
+  "intruderalerts.command.list.header": "受信任的玩家：",
+  "intruderalerts.command.toggle.enabled": "已啟用",
+  "intruderalerts.command.toggle.disabled": "已停用",
+  "intruderalerts.command.zone.added": "已新增忽略區域 %s",
+  "intruderalerts.command.zone.exists": "名為 %s 的區域已存在。",
+  "intruderalerts.command.zone.removed": "已移除忽略區域 %s",
+  "intruderalerts.command.zone.list_empty": "沒有忽略區域。",
+  "intruderalerts.command.zone.list_header": "忽略區域："
+}

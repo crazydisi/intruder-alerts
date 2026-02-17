@@ -1,0 +1,23 @@
+{
+  "intruderalerts.prefix": "[IntruderAlerts] ",
+  "intruderalerts.alert.entered_render_distance": "%s è apparso nelle vicinanze!",
+  "intruderalerts.alert.toast.title": "IntruderAlerts",
+  "intruderalerts.alert.toast.body": "%s è nelle vicinanze!",
+  "intruderalerts.error.not_connected": "Non connesso a un server.",
+  "intruderalerts.error.not_in_world": "Non sei in un mondo.",
+  "intruderalerts.error.player_not_in_tab": "Giocatore non trovato nella lista giocatori: %s",
+  "intruderalerts.error.player_not_trusted": "Giocatore non trovato nella lista di fiducia: %s",
+  "intruderalerts.error.zone_not_found": "Zona non trovata: %s",
+  "intruderalerts.command.trust.success": "%s aggiunto alla lista di fiducia.",
+  "intruderalerts.command.trust.already": "%s è già nella lista di fiducia.",
+  "intruderalerts.command.untrust.success": "%s rimosso dalla lista di fiducia.",
+  "intruderalerts.command.list.empty": "Nessun giocatore fidato.",
+  "intruderalerts.command.list.header": "Giocatori fidati:",
+  "intruderalerts.command.toggle.enabled": "Attivato",
+  "intruderalerts.command.toggle.disabled": "Disattivato",
+  "intruderalerts.command.zone.added": "Zona ignorata aggiunta: %s",
+  "intruderalerts.command.zone.exists": "Esiste già una zona chiamata %s.",
+  "intruderalerts.command.zone.removed": "Zona ignorata rimossa: %s",
+  "intruderalerts.command.zone.list_empty": "Nessuna zona ignorata.",
+  "intruderalerts.command.zone.list_header": "Zone ignorate:"
+}

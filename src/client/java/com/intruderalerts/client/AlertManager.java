@@ -20,9 +20,9 @@ public class AlertManager {
 
     private void sendChatAlert(MinecraftClient client, String playerName) {
         Text message = Text.empty()
-                .append(Text.literal("[IntruderAlerts] ").formatted(Formatting.RED, Formatting.BOLD))
-                .append(Text.literal(playerName).formatted(Formatting.YELLOW))
-                .append(Text.literal(" entered your render distance!").formatted(Formatting.RED));
+                .append(Text.translatable("intruderalerts.prefix").formatted(Formatting.RED, Formatting.BOLD))
+                .append(Text.translatable("intruderalerts.alert.entered_render_distance",
+                        Text.literal(playerName).formatted(Formatting.YELLOW)).formatted(Formatting.RED));
 
         client.inGameHud.getChatHud().addMessage(message);
     }
@@ -31,8 +31,8 @@ public class AlertManager {
         SystemToast.show(
                 client.getToastManager(),
                 SystemToast.Type.PERIODIC_NOTIFICATION,
-                Text.literal("IntruderAlerts"),
-                Text.literal(playerName + " is nearby!")
+                Text.translatable("intruderalerts.alert.toast.title"),
+                Text.translatable("intruderalerts.alert.toast.body", playerName)
         );
     }
 

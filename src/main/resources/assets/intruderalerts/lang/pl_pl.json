@@ -1,0 +1,23 @@
+{
+  "intruderalerts.prefix": "[IntruderAlerts] ",
+  "intruderalerts.alert.entered_render_distance": "%s pojawił się w pobliżu!",
+  "intruderalerts.alert.toast.title": "IntruderAlerts",
+  "intruderalerts.alert.toast.body": "%s jest w pobliżu!",
+  "intruderalerts.error.not_connected": "Nie połączono z serwerem.",
+  "intruderalerts.error.not_in_world": "Nie jesteś w żadnym świecie.",
+  "intruderalerts.error.player_not_in_tab": "Gracz nie znaleziony na liście graczy: %s",
+  "intruderalerts.error.player_not_trusted": "Gracz nie znaleziony na liście zaufanych: %s",
+  "intruderalerts.error.zone_not_found": "Strefa nie znaleziona: %s",
+  "intruderalerts.command.trust.success": "Dodano %s do zaufanych.",
+  "intruderalerts.command.trust.already": "%s jest już zaufany.",
+  "intruderalerts.command.untrust.success": "Usunięto %s z listy zaufanych.",
+  "intruderalerts.command.list.empty": "Brak zaufanych graczy.",
+  "intruderalerts.command.list.header": "Zaufani gracze:",
+  "intruderalerts.command.toggle.enabled": "Włączono",
+  "intruderalerts.command.toggle.disabled": "Wyłączono",
+  "intruderalerts.command.zone.added": "Dodano strefę ignorowania %s",
+  "intruderalerts.command.zone.exists": "Strefa o nazwie %s już istnieje.",
+  "intruderalerts.command.zone.removed": "Usunięto strefę ignorowania %s",
+  "intruderalerts.command.zone.list_empty": "Brak stref ignorowania.",
+  "intruderalerts.command.zone.list_header": "Strefy ignorowania:"
+}

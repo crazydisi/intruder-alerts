@@ -1,0 +1,23 @@
+{
+  "intruderalerts.prefix": "[IntruderAlerts] ",
+  "intruderalerts.alert.entered_render_distance": "%s з'явився поблизу!",
+  "intruderalerts.alert.toast.title": "IntruderAlerts",
+  "intruderalerts.alert.toast.body": "%s поруч!",
+  "intruderalerts.error.not_connected": "Немає підключення до сервера.",
+  "intruderalerts.error.not_in_world": "Ви не перебуваєте у світі.",
+  "intruderalerts.error.player_not_in_tab": "Гравця не знайдено у списку гравців: %s",
+  "intruderalerts.error.player_not_trusted": "Гравця не знайдено у списку довірених: %s",
+  "intruderalerts.error.zone_not_found": "Зону не знайдено: %s",
+  "intruderalerts.command.trust.success": "Додано %s до довірених.",
+  "intruderalerts.command.trust.already": "%s вже є у списку довірених.",
+  "intruderalerts.command.untrust.success": "Видалено %s зі списку довірених.",
+  "intruderalerts.command.list.empty": "Немає довірених гравців.",
+  "intruderalerts.command.list.header": "Довірені гравці:",
+  "intruderalerts.command.toggle.enabled": "Увімкнено",
+  "intruderalerts.command.toggle.disabled": "Вимкнено",
+  "intruderalerts.command.zone.added": "Додано зону ігнорування %s",
+  "intruderalerts.command.zone.exists": "Зона з назвою %s вже існує.",
+  "intruderalerts.command.zone.removed": "Видалено зону ігнорування %s",
+  "intruderalerts.command.zone.list_empty": "Немає зон ігнорування.",
+  "intruderalerts.command.zone.list_header": "Зони ігнорування:"
+}

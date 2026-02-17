@@ -1,0 +1,23 @@
+{
+  "intruderalerts.prefix": "[IntruderAlerts] ",
+  "intruderalerts.alert.entered_render_distance": "%s が近くに現れました！",
+  "intruderalerts.alert.toast.title": "IntruderAlerts",
+  "intruderalerts.alert.toast.body": "%s が近くにいます！",
+  "intruderalerts.error.not_connected": "サーバーに接続されていません。",
+  "intruderalerts.error.not_in_world": "ワールドにいません。",
+  "intruderalerts.error.player_not_in_tab": "タブリストにプレイヤーが見つかりません: %s",
+  "intruderalerts.error.player_not_trusted": "信頼リストにプレイヤーが見つかりません: %s",
+  "intruderalerts.error.zone_not_found": "ゾーンが見つかりません: %s",
+  "intruderalerts.command.trust.success": "%s を信頼しました",
+  "intruderalerts.command.trust.already": "%s はすでに信頼済みです。",
+  "intruderalerts.command.untrust.success": "%s を信頼リストから削除しました。",
+  "intruderalerts.command.list.empty": "信頼済みプレイヤーはいません。",
+  "intruderalerts.command.list.header": "信頼済みプレイヤー:",
+  "intruderalerts.command.toggle.enabled": "有効",
+  "intruderalerts.command.toggle.disabled": "無効",
+  "intruderalerts.command.zone.added": "無視ゾーン %s を追加しました",
+  "intruderalerts.command.zone.exists": "%s という名前のゾーンはすでに存在します。",
+  "intruderalerts.command.zone.removed": "無視ゾーン %s を削除しました",
+  "intruderalerts.command.zone.list_empty": "無視ゾーンはありません。",
+  "intruderalerts.command.zone.list_header": "無視ゾーン:"
+}

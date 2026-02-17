@@ -1,0 +1,23 @@
+{
+  "intruderalerts.prefix": "[IntruderAlerts] ",
+  "intruderalerts.alert.entered_render_distance": "%s appeared nearby!",
+  "intruderalerts.alert.toast.title": "IntruderAlerts",
+  "intruderalerts.alert.toast.body": "%s is nearby!",
+  "intruderalerts.error.not_connected": "Not connected to a server.",
+  "intruderalerts.error.not_in_world": "Not in a world.",
+  "intruderalerts.error.player_not_in_tab": "Player not found in tab list: %s",
+  "intruderalerts.error.player_not_trusted": "Player not found in trust list: %s",
+  "intruderalerts.error.zone_not_found": "Zone not found: %s",
+  "intruderalerts.command.trust.success": "Trusted %s",
+  "intruderalerts.command.trust.already": "%s is already trusted.",
+  "intruderalerts.command.untrust.success": "Removed %s from trust list.",
+  "intruderalerts.command.list.empty": "No trusted players.",
+  "intruderalerts.command.list.header": "Trusted players:",
+  "intruderalerts.command.toggle.enabled": "Enabled",
+  "intruderalerts.command.toggle.disabled": "Disabled",
+  "intruderalerts.command.zone.added": "Added ignore zone %s",
+  "intruderalerts.command.zone.exists": "A zone named %s already exists.",
+  "intruderalerts.command.zone.removed": "Removed ignore zone %s",
+  "intruderalerts.command.zone.list_empty": "No ignore zones.",
+  "intruderalerts.command.zone.list_header": "Ignore zones:"
+}

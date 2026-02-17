@@ -73,7 +73,7 @@ public class CommandRegistrar {
     private static int executeTrust(FabricClientCommandSource source, TrustManager trustManager, String name) {
         MinecraftClient client = source.getClient();
         if (client.getNetworkHandler() == null) {
-            source.sendError(Text.literal("Not connected to a server."));
+            source.sendError(Text.translatable("intruderalerts.error.not_connected"));
             return 0;
         }
 
@@ -86,7 +86,7 @@ public class CommandRegistrar {
         }
 
         if (target == null) {
-            source.sendError(Text.literal("Player not found in tab list: " + name));
+            source.sendError(Text.translatable("intruderalerts.error.player_not_in_tab", name));
             return 0;
         }
 
@@ -95,14 +95,15 @@ public class CommandRegistrar {
 
         if (trustManager.trust(uuid, actualName)) {
             source.sendFeedback(Text.empty()
-                    .append(Text.literal("[IntruderAlerts] ").formatted(Formatting.GREEN))
-                    .append(Text.literal("Trusted ").formatted(Formatting.WHITE))
-                    .append(Text.literal(actualName).formatted(Formatting.YELLOW))
+                    .append(Text.translatable("intruderalerts.prefix").formatted(Formatting.GREEN))
+                    .append(Text.translatable("intruderalerts.command.trust.success",
+                            Text.literal(actualName).formatted(Formatting.YELLOW)).formatted(Formatting.WHITE))
                     .append(Text.literal(" (" + uuid + ")").formatted(Formatting.GRAY)));
         } else {
             source.sendFeedback(Text.empty()
-                    .append(Text.literal("[IntruderAlerts] ").formatted(Formatting.YELLOW))
-                    .append(Text.literal(actualName + " is already trusted.").formatted(Formatting.WHITE)));
+                    .append(Text.translatable("intruderalerts.prefix").formatted(Formatting.YELLOW))
+                    .append(Text.translatable("intruderalerts.command.trust.already",
+                            Text.literal(actualName).formatted(Formatting.YELLOW)).formatted(Formatting.WHITE)));
         }
 
         return 1;
@@ -111,12 +112,11 @@ public class CommandRegistrar {
     private static int executeUntrust(FabricClientCommandSource source, TrustManager trustManager, String name) {
         if (trustManager.untrust(name)) {
             source.sendFeedback(Text.empty()
-                    .append(Text.literal("[IntruderAlerts] ").formatted(Formatting.GREEN))
-                    .append(Text.literal("Removed ").formatted(Formatting.WHITE))
-                    .append(Text.literal(name).formatted(Formatting.YELLOW))
-                    .append(Text.literal(" from trust list.").formatted(Formatting.WHITE)));
+                    .append(Text.translatable("intruderalerts.prefix").formatted(Formatting.GREEN))
+                    .append(Text.translatable("intruderalerts.command.untrust.success",
+                            Text.literal(name).formatted(Formatting.YELLOW)).formatted(Formatting.WHITE)));
         } else {
-            source.sendError(Text.literal("Player not found in trust list: " + name));
+            source.sendError(Text.translatable("intruderalerts.error.player_not_trusted", name));
         }
 
         return 1;
@@ -126,14 +126,14 @@ public class CommandRegistrar {
         var entries = trustManager.getTrustedEntries();
         if (entries.isEmpty()) {
             source.sendFeedback(Text.empty()
-                    .append(Text.literal("[IntruderAlerts] ").formatted(Formatting.GREEN))
-                    .append(Text.literal("No trusted players.").formatted(Formatting.WHITE)));
+                    .append(Text.translatable("intruderalerts.prefix").formatted(Formatting.GREEN))
+                    .append(Text.translatable("intruderalerts.command.list.empty").formatted(Formatting.WHITE)));
             return 1;
         }
 
         source.sendFeedback(Text.empty()
-                .append(Text.literal("[IntruderAlerts] ").formatted(Formatting.GREEN))
-                .append(Text.literal("Trusted players:").formatted(Formatting.WHITE)));
+                .append(Text.translatable("intruderalerts.prefix").formatted(Formatting.GREEN))
+                .append(Text.translatable("intruderalerts.command.list.header").formatted(Formatting.WHITE)));
 
         for (Map.Entry<UUID, String> entry : entries) {
             source.sendFeedback(Text.empty()
@@ -153,9 +153,10 @@ public class CommandRegistrar {
         }
 
         source.sendFeedback(Text.empty()
-                .append(Text.literal("[IntruderAlerts] ").formatted(Formatting.GREEN))
-                .append(Text.literal(enabled ? "Enabled" : "Disabled")
-                        .formatted(enabled ? Formatting.GREEN : Formatting.RED)));
+                .append(Text.translatable("intruderalerts.prefix").formatted(Formatting.GREEN))
+                .append(enabled
+                        ? Text.translatable("intruderalerts.command.toggle.enabled").formatted(Formatting.GREEN)
+                        : Text.translatable("intruderalerts.command.toggle.disabled").formatted(Formatting.RED)));
 
         return 1;
     }
@@ -200,7 +201,7 @@ public class CommandRegistrar {
     private static int executeZoneAdd(FabricClientCommandSource source, ZoneManager zoneManager, String name) {
         MinecraftClient client = source.getClient();
         if (client.player == null) {
-            source.sendError(Text.literal("Not in a world."));
+            source.sendError(Text.translatable("intruderalerts.error.not_in_world"));
             return 0;
         }
 
@@ -211,16 +212,15 @@ public class CommandRegistrar {
 
         if (zoneManager.addZone(name, x, y, z, dimension)) {
             source.sendFeedback(Text.empty()
-                    .append(Text.literal("[IntruderAlerts] ").formatted(Formatting.GREEN))
-                    .append(Text.literal("Added ignore zone ").formatted(Formatting.WHITE))
-                    .append(Text.literal(name).formatted(Formatting.YELLOW))
+                    .append(Text.translatable("intruderalerts.prefix").formatted(Formatting.GREEN))
+                    .append(Text.translatable("intruderalerts.command.zone.added",
+                            Text.literal(name).formatted(Formatting.YELLOW)).formatted(Formatting.WHITE))
                     .append(Text.literal(String.format(" at %.0f, %.0f, %.0f in %s", x, y, z, dimension)).formatted(Formatting.GRAY)));
         } else {
             source.sendFeedback(Text.empty()
-                    .append(Text.literal("[IntruderAlerts] ").formatted(Formatting.YELLOW))
-                    .append(Text.literal("A zone named ").formatted(Formatting.WHITE))
-                    .append(Text.literal(name).formatted(Formatting.YELLOW))
-                    .append(Text.literal(" already exists.").formatted(Formatting.WHITE)));
+                    .append(Text.translatable("intruderalerts.prefix").formatted(Formatting.YELLOW))
+                    .append(Text.translatable("intruderalerts.command.zone.exists",
+                            Text.literal(name).formatted(Formatting.YELLOW)).formatted(Formatting.WHITE)));
         }
 
         return 1;
@@ -229,11 +229,11 @@ public class CommandRegistrar {
     private static int executeZoneRemove(FabricClientCommandSource source, ZoneManager zoneManager, String name) {
         if (zoneManager.removeZone(name)) {
             source.sendFeedback(Text.empty()
-                    .append(Text.literal("[IntruderAlerts] ").formatted(Formatting.GREEN))
-                    .append(Text.literal("Removed ignore zone ").formatted(Formatting.WHITE))
-                    .append(Text.literal(name).formatted(Formatting.YELLOW)));
+                    .append(Text.translatable("intruderalerts.prefix").formatted(Formatting.GREEN))
+                    .append(Text.translatable("intruderalerts.command.zone.removed",
+                            Text.literal(name).formatted(Formatting.YELLOW)).formatted(Formatting.WHITE)));
         } else {
-            source.sendError(Text.literal("Zone not found: " + name));
+            source.sendError(Text.translatable("intruderalerts.error.zone_not_found", name));
         }
 
         return 1;
@@ -243,14 +243,14 @@ public class CommandRegistrar {
         var zones = zoneManager.getZones();
         if (zones.isEmpty()) {
             source.sendFeedback(Text.empty()
-                    .append(Text.literal("[IntruderAlerts] ").formatted(Formatting.GREEN))
-                    .append(Text.literal("No ignore zones.").formatted(Formatting.WHITE)));
+                    .append(Text.translatable("intruderalerts.prefix").formatted(Formatting.GREEN))
+                    .append(Text.translatable("intruderalerts.command.zone.list_empty").formatted(Formatting.WHITE)));
             return 1;
         }
 
         source.sendFeedback(Text.empty()
-                .append(Text.literal("[IntruderAlerts] ").formatted(Formatting.GREEN))
-                .append(Text.literal("Ignore zones:").formatted(Formatting.WHITE)));
+                .append(Text.translatable("intruderalerts.prefix").formatted(Formatting.GREEN))
+                .append(Text.translatable("intruderalerts.command.zone.list_header").formatted(Formatting.WHITE)));
 
         for (ZoneManager.ZoneEntry zone : zones) {
             source.sendFeedback(Text.empty()
