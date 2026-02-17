@@ -6,7 +6,7 @@
   "description": "Alerts you when untrusted players enter your render distance.",
   "authors": [],
   "contact": {},
-  "license": "MIT",
+  "license": "Apache-2.0",
   "icon": "assets/intruderalerts/icon.png",
   "environment": "*",
   "entrypoints": {
