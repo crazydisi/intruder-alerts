@@ -56,4 +56,4 @@ The output JAR will be in `build/libs/`. To switch Minecraft versions, change `m
 
 ## License
 
-MIT
+Apache-2.0

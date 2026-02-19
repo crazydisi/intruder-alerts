@@ -3,10 +3,10 @@
   "id": "intruderalerts",
   "version": "${version}",
   "name": "IntruderAlerts",
-  "description": "Alerts you when untrusted players enter your render distance.",
+  "description": "Alerts you when untrusted players enter your render distance. Manage your trust list, safe zones, and settings with /intruder.",
   "authors": [],
   "contact": {},
-  "license": "MIT",
+  "license": "Apache-2.0",
   "icon": "assets/intruderalerts/icon.png",
   "environment": "*",
   "entrypoints": {

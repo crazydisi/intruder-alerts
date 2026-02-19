@@ -3,6 +3,7 @@ package com.intruderalerts.client;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
+import net.minecraft.client.network.PlayerListEntry;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -59,12 +60,23 @@ public class PlayerTracker {
             return;
         }
 
+        Set<UUID> serverPlayers = new HashSet<>();
+        if (client.getNetworkHandler() != null) {
+            for (PlayerListEntry entry : client.getNetworkHandler().getPlayerList()) {
+                serverPlayers.add(ProfileUtil.getId(entry.getProfile()));
+            }
+        }
+
         Set<UUID> currentPlayers = new HashSet<>();
 
         for (AbstractClientPlayerEntity player : client.world.getPlayers()) {
             UUID uuid = player.getUuid();
 
             if (uuid.equals(client.player.getUuid())) {
+                continue;
+            }
+
+            if (!serverPlayers.contains(uuid)) {
                 continue;
             }
 
