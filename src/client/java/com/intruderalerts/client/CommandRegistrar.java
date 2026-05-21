@@ -9,6 +9,11 @@ import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -17,7 +22,9 @@ import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.lit
 
 public class CommandRegistrar {
 
-    public static void register(TrustManager trustManager, PlayerTracker playerTracker, ZoneManager zoneManager, AlertManager alertManager, SettingsManager settingsManager) {
+    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    public static void register(TrustManager trustManager, PlayerTracker playerTracker, ZoneManager zoneManager, AlertManager alertManager, SettingsManager settingsManager, HistoryManager historyManager) {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
             dispatcher.register(literal("intruder")
                     .then(literal("demo")
@@ -57,6 +64,16 @@ public class CommandRegistrar {
                                     .then(literal("toggle")
                                             .executes(ctx -> executeSettingsSoundsToggle(ctx.getSource(), settingsManager))
                                     )
+                            )
+                    )
+                    .then(literal("history")
+                            .executes(ctx -> executeHistoryList(ctx.getSource(), historyManager, null))
+                            .then(literal("clear")
+                                    .executes(ctx -> executeHistoryClear(ctx.getSource(), historyManager))
+                            )
+                            .then(argument("name", StringArgumentType.word())
+                                    .suggests(suggestHistoryNames(historyManager))
+                                    .executes(ctx -> executeHistoryList(ctx.getSource(), historyManager, StringArgumentType.getString(ctx, "name")))
                             )
                     )
                     .then(literal("zone")
@@ -287,5 +304,96 @@ public class CommandRegistrar {
         }
 
         return 1;
+    }
+
+    private static int executeHistoryList(FabricClientCommandSource source, HistoryManager historyManager, String filterName) {
+        List<HistoryManager.HistoryEntry> all = historyManager.getEntries();
+        List<HistoryManager.HistoryEntry> filtered = new ArrayList<>();
+        for (HistoryManager.HistoryEntry entry : all) {
+            if (filterName == null || (entry.name != null && entry.name.equalsIgnoreCase(filterName))) {
+                filtered.add(entry);
+            }
+        }
+
+        if (filtered.isEmpty()) {
+            Text body = filterName == null
+                    ? Text.translatable("intruderalerts.command.history.empty")
+                    : Text.translatable("intruderalerts.command.history.not_found", Text.literal(filterName).formatted(Formatting.YELLOW));
+            source.sendFeedback(Text.empty()
+                    .append(Text.translatable("intruderalerts.prefix").formatted(Formatting.GREEN))
+                    .append(body.copy().formatted(Formatting.WHITE)));
+            return 1;
+        }
+
+        source.sendFeedback(Text.empty()
+                .append(Text.translatable("intruderalerts.prefix").formatted(Formatting.GREEN))
+                .append(Text.translatable("intruderalerts.command.history.header").formatted(Formatting.WHITE)));
+
+        int start = filterName == null ? Math.max(0, filtered.size() - 20) : 0;
+        for (int i = filtered.size() - 1; i >= start; i--) {
+            HistoryManager.HistoryEntry entry = filtered.get(i);
+            source.sendFeedback(formatHistoryRow(entry));
+        }
+
+        return 1;
+    }
+
+    private static Text formatHistoryRow(HistoryManager.HistoryEntry entry) {
+        String enteredAt = formatTime(entry.enteredAt);
+        String enterCoords = String.format("%.0f, %.0f, %.0f in %s",
+                entry.enterX, entry.enterY, entry.enterZ, entry.enterDimension);
+        String lastCoords = String.format("%.0f, %.0f, %.0f in %s",
+                entry.lastX, entry.lastY, entry.lastZ, entry.lastDimension);
+
+        Text base = Text.empty()
+                .append(Text.literal("  - ").formatted(Formatting.GRAY))
+                .append(Text.literal(entry.name == null ? entry.uuid : entry.name).formatted(Formatting.YELLOW))
+                .append(Text.literal(" entered ").formatted(Formatting.GRAY))
+                .append(Text.literal(enteredAt).formatted(Formatting.WHITE))
+                .append(Text.literal(" at ").formatted(Formatting.GRAY))
+                .append(Text.literal(enterCoords).formatted(Formatting.WHITE));
+
+        if (entry.exitedAt == null) {
+            return base.copy()
+                    .append(Text.literal(" · ").formatted(Formatting.GRAY))
+                    .append(Text.translatable("intruderalerts.command.history.row_open").formatted(Formatting.GREEN));
+        }
+
+        String exitedAt = formatTime(entry.exitedAt);
+        Formatting reasonColor = HistoryManager.EXIT_LOGGED_OUT.equals(entry.exitReason) ? Formatting.RED : Formatting.AQUA;
+        String reasonKey = HistoryManager.EXIT_LOGGED_OUT.equals(entry.exitReason)
+                ? "intruderalerts.command.history.exit_logout"
+                : "intruderalerts.command.history.exit_range";
+
+        return base.copy()
+                .append(Text.literal(" · ").formatted(Formatting.GRAY))
+                .append(Text.translatable(reasonKey).formatted(reasonColor))
+                .append(Text.literal(" ").formatted(Formatting.GRAY))
+                .append(Text.literal(exitedAt).formatted(Formatting.WHITE))
+                .append(Text.literal(" at ").formatted(Formatting.GRAY))
+                .append(Text.literal(lastCoords).formatted(Formatting.WHITE));
+    }
+
+    private static String formatTime(long epochMillis) {
+        return TIME_FORMATTER.format(Instant.ofEpochMilli(epochMillis).atZone(ZoneId.systemDefault()));
+    }
+
+    private static int executeHistoryClear(FabricClientCommandSource source, HistoryManager historyManager) {
+        historyManager.clear();
+        source.sendFeedback(Text.empty()
+                .append(Text.translatable("intruderalerts.prefix").formatted(Formatting.GREEN))
+                .append(Text.translatable("intruderalerts.command.history.cleared").formatted(Formatting.WHITE)));
+        return 1;
+    }
+
+    private static SuggestionProvider<FabricClientCommandSource> suggestHistoryNames(HistoryManager historyManager) {
+        return (ctx, builder) -> {
+            for (String name : historyManager.getKnownNames()) {
+                if (name.toLowerCase().startsWith(builder.getRemainingLowerCase())) {
+                    builder.suggest(name);
+                }
+            }
+            return builder.buildFuture();
+        };
     }
 }

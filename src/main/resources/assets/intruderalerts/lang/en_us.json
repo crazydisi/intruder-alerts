@@ -21,5 +21,12 @@
   "intruderalerts.command.zone.list_empty": "No ignore zones.",
   "intruderalerts.command.zone.list_header": "Ignore zones:",
   "intruderalerts.command.settings.sounds.enabled": "Sound alerts enabled",
-  "intruderalerts.command.settings.sounds.disabled": "Sound alerts disabled"
+  "intruderalerts.command.settings.sounds.disabled": "Sound alerts disabled",
+  "intruderalerts.command.history.header": "Sighting history:",
+  "intruderalerts.command.history.empty": "No sightings recorded.",
+  "intruderalerts.command.history.not_found": "No sightings found for %s.",
+  "intruderalerts.command.history.cleared": "Sighting history cleared.",
+  "intruderalerts.command.history.row_open": "still here",
+  "intruderalerts.command.history.exit_logout": "logged out",
+  "intruderalerts.command.history.exit_range": "left range"
 }

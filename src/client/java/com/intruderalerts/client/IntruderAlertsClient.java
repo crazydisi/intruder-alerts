@@ -11,9 +11,10 @@ public class IntruderAlertsClient implements ClientModInitializer {
         SettingsManager settingsManager = new SettingsManager();
         AlertManager alertManager = new AlertManager(settingsManager);
         ZoneManager zoneManager = new ZoneManager();
-        PlayerTracker playerTracker = new PlayerTracker(trustManager, alertManager, zoneManager);
+        HistoryManager historyManager = new HistoryManager();
+        PlayerTracker playerTracker = new PlayerTracker(trustManager, alertManager, zoneManager, historyManager);
         playerTracker.register();
-        CommandRegistrar.register(trustManager, playerTracker, zoneManager, alertManager, settingsManager);
+        CommandRegistrar.register(trustManager, playerTracker, zoneManager, alertManager, settingsManager, historyManager);
     }
 
     public static boolean isEnabled() {

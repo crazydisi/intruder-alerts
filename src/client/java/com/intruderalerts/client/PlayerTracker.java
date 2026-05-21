@@ -15,13 +15,15 @@ public class PlayerTracker {
     private final TrustManager trustManager;
     private final AlertManager alertManager;
     private final ZoneManager zoneManager;
+    private final HistoryManager historyManager;
     private final Set<UUID> knownNearbyPlayers = new HashSet<>();
     private int tickCounter = 0;
 
-    public PlayerTracker(TrustManager trustManager, AlertManager alertManager, ZoneManager zoneManager) {
+    public PlayerTracker(TrustManager trustManager, AlertManager alertManager, ZoneManager zoneManager, HistoryManager historyManager) {
         this.trustManager = trustManager;
         this.alertManager = alertManager;
         this.zoneManager = zoneManager;
+        this.historyManager = historyManager;
     }
 
     public void register() {
@@ -31,6 +33,7 @@ public class PlayerTracker {
     public void clearTracking() {
         knownNearbyPlayers.clear();
         tickCounter = 0;
+        historyManager.closeAllOpen(HistoryManager.EXIT_OUT_OF_RANGE);
     }
 
     private void onTick(MinecraftClient client) {
@@ -39,6 +42,9 @@ public class PlayerTracker {
         }
 
         if (client.world == null || client.player == null) {
+            if (!knownNearbyPlayers.isEmpty()) {
+                historyManager.closeAllOpen(HistoryManager.EXIT_OUT_OF_RANGE);
+            }
             knownNearbyPlayers.clear();
             return;
         }
@@ -56,6 +62,9 @@ public class PlayerTracker {
         double radius = client.options.getViewDistance().getValue() * 16.0;
 
         if (zoneManager.isInAnyZone(playerX, playerY, playerZ, dimension, radius)) {
+            if (!knownNearbyPlayers.isEmpty()) {
+                historyManager.closeAllOpen(HistoryManager.EXIT_OUT_OF_RANGE);
+            }
             knownNearbyPlayers.clear();
             return;
         }
@@ -86,8 +95,18 @@ public class PlayerTracker {
 
             currentPlayers.add(uuid);
 
+            String name = player.getName().getString();
+
             if (!knownNearbyPlayers.contains(uuid)) {
-                alertManager.alert(player.getName().getString());
+                alertManager.alert(name);
+            }
+
+            historyManager.recordSeen(uuid, name, player.getX(), player.getY(), player.getZ(), dimension);
+        }
+
+        for (UUID uuid : knownNearbyPlayers) {
+            if (!currentPlayers.contains(uuid)) {
+                historyManager.recordExit(uuid, serverPlayers.contains(uuid));
             }
         }
 
