@@ -16,14 +16,16 @@ public class PlayerTracker {
     private final AlertManager alertManager;
     private final ZoneManager zoneManager;
     private final HistoryManager historyManager;
+    private final IgnoreManager ignoreManager;
     private final Set<UUID> knownNearbyPlayers = new HashSet<>();
     private int tickCounter = 0;
 
-    public PlayerTracker(TrustManager trustManager, AlertManager alertManager, ZoneManager zoneManager, HistoryManager historyManager) {
+    public PlayerTracker(TrustManager trustManager, AlertManager alertManager, ZoneManager zoneManager, HistoryManager historyManager, IgnoreManager ignoreManager) {
         this.trustManager = trustManager;
         this.alertManager = alertManager;
         this.zoneManager = zoneManager;
         this.historyManager = historyManager;
+        this.ignoreManager = ignoreManager;
     }
 
     public void register() {
@@ -93,9 +95,17 @@ public class PlayerTracker {
                 continue;
             }
 
-            currentPlayers.add(uuid);
-
             String name = player.getName().getString();
+
+            if (ignoreManager.isIgnoredName(name)) {
+                continue;
+            }
+
+            if (player.getY() < client.world.getBottomY()) {
+                continue;
+            }
+
+            currentPlayers.add(uuid);
 
             if (!knownNearbyPlayers.contains(uuid)) {
                 alertManager.alert(name);

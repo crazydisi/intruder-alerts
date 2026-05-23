@@ -7,9 +7,11 @@ A client-side Fabric mod that notifies you whenever an untrusted player enters y
 - **Instant alerts** — Get notified through three channels at once: a bold chat message, a toast popup, and an Ender Dragon growl sound
 - **Trust list** — Mark players as trusted so they never trigger alerts. Saved by UUID, so name changes won't break it
 - **Safe zones** — Define locations where alerts are suppressed (e.g. spawn areas, trading hubs). Zones are dimension-aware and persist across sessions
+- **Ignore list** — Filter out server anti-cheat probe bots by name (ships with `MineProbe` by default). Players below the world floor are also ignored automatically
+- **Sighting history** — Review past intrusions with timestamps, coordinates, and exit reason (logged out vs. left range)
 - **Toggle on/off** — Quickly enable or disable the mod without restarting
 - **Fully client-side** — Works on any server. No server-side mod or permissions needed
-- **Persistent config** — Your trust list and zones are saved to JSON files and survive restarts
+- **Persistent config** — Your trust list, zones, and ignore list are saved to JSON files and survive restarts
 
 ## Supported Versions
 
@@ -31,10 +33,17 @@ All commands use the `/intruder` prefix:
 | `/intruder untrust <player>` | Remove a player from your trust list |
 | `/intruder list` | Show all trusted players |
 | `/intruder toggle` | Enable or disable alerts |
+| `/intruder demo <name>` | Fire a test alert to preview chat/toast/sound |
 | `/intruder settings sounds toggle` | Enable or disable alert sounds |
 | `/intruder zone add <name>` | Create a safe zone at your current location |
 | `/intruder zone remove <name>` | Delete a safe zone |
 | `/intruder zone list` | Show all safe zones |
+| `/intruder ignore add <name>` | Always skip a player name (for server probe bots) |
+| `/intruder ignore remove <name>` | Stop ignoring a name |
+| `/intruder ignore list` | Show all ignored names |
+| `/intruder history` | Show the last 20 sightings |
+| `/intruder history <player>` | Show all sightings for a specific player |
+| `/intruder history clear` | Erase all sighting history |
 
 ## How It Works
 

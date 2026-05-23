@@ -24,7 +24,7 @@ public class CommandRegistrar {
 
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    public static void register(TrustManager trustManager, PlayerTracker playerTracker, ZoneManager zoneManager, AlertManager alertManager, SettingsManager settingsManager, HistoryManager historyManager) {
+    public static void register(TrustManager trustManager, PlayerTracker playerTracker, ZoneManager zoneManager, AlertManager alertManager, SettingsManager settingsManager, HistoryManager historyManager, IgnoreManager ignoreManager) {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
             dispatcher.register(literal("intruder")
                     .then(literal("demo")
@@ -74,6 +74,23 @@ public class CommandRegistrar {
                             .then(argument("name", StringArgumentType.word())
                                     .suggests(suggestHistoryNames(historyManager))
                                     .executes(ctx -> executeHistoryList(ctx.getSource(), historyManager, StringArgumentType.getString(ctx, "name")))
+                            )
+                    )
+                    .then(literal("ignore")
+                            .then(literal("add")
+                                    .then(argument("name", StringArgumentType.word())
+                                            .suggests(suggestOnlinePlayers())
+                                            .executes(ctx -> executeIgnoreAdd(ctx.getSource(), ignoreManager, StringArgumentType.getString(ctx, "name")))
+                                    )
+                            )
+                            .then(literal("remove")
+                                    .then(argument("name", StringArgumentType.word())
+                                            .suggests(suggestIgnoredNames(ignoreManager))
+                                            .executes(ctx -> executeIgnoreRemove(ctx.getSource(), ignoreManager, StringArgumentType.getString(ctx, "name")))
+                                    )
+                            )
+                            .then(literal("list")
+                                    .executes(ctx -> executeIgnoreList(ctx.getSource(), ignoreManager))
                             )
                     )
                     .then(literal("zone")
@@ -304,6 +321,65 @@ public class CommandRegistrar {
         }
 
         return 1;
+    }
+
+    private static int executeIgnoreAdd(FabricClientCommandSource source, IgnoreManager ignoreManager, String name) {
+        if (ignoreManager.addName(name)) {
+            source.sendFeedback(Text.empty()
+                    .append(Text.translatable("intruderalerts.prefix").formatted(Formatting.GREEN))
+                    .append(Text.translatable("intruderalerts.command.ignore.added",
+                            Text.literal(name).formatted(Formatting.YELLOW)).formatted(Formatting.WHITE)));
+        } else {
+            source.sendFeedback(Text.empty()
+                    .append(Text.translatable("intruderalerts.prefix").formatted(Formatting.YELLOW))
+                    .append(Text.translatable("intruderalerts.command.ignore.exists",
+                            Text.literal(name).formatted(Formatting.YELLOW)).formatted(Formatting.WHITE)));
+        }
+        return 1;
+    }
+
+    private static int executeIgnoreRemove(FabricClientCommandSource source, IgnoreManager ignoreManager, String name) {
+        if (ignoreManager.removeName(name)) {
+            source.sendFeedback(Text.empty()
+                    .append(Text.translatable("intruderalerts.prefix").formatted(Formatting.GREEN))
+                    .append(Text.translatable("intruderalerts.command.ignore.removed",
+                            Text.literal(name).formatted(Formatting.YELLOW)).formatted(Formatting.WHITE)));
+        } else {
+            source.sendError(Text.translatable("intruderalerts.error.ignore_not_found", name));
+        }
+        return 1;
+    }
+
+    private static int executeIgnoreList(FabricClientCommandSource source, IgnoreManager ignoreManager) {
+        List<String> names = ignoreManager.getNames();
+        if (names.isEmpty()) {
+            source.sendFeedback(Text.empty()
+                    .append(Text.translatable("intruderalerts.prefix").formatted(Formatting.GREEN))
+                    .append(Text.translatable("intruderalerts.command.ignore.list_empty").formatted(Formatting.WHITE)));
+            return 1;
+        }
+
+        source.sendFeedback(Text.empty()
+                .append(Text.translatable("intruderalerts.prefix").formatted(Formatting.GREEN))
+                .append(Text.translatable("intruderalerts.command.ignore.list_header").formatted(Formatting.WHITE)));
+
+        for (String name : names) {
+            source.sendFeedback(Text.empty()
+                    .append(Text.literal("  - ").formatted(Formatting.GRAY))
+                    .append(Text.literal(name).formatted(Formatting.YELLOW)));
+        }
+        return 1;
+    }
+
+    private static SuggestionProvider<FabricClientCommandSource> suggestIgnoredNames(IgnoreManager ignoreManager) {
+        return (ctx, builder) -> {
+            for (String name : ignoreManager.getNames()) {
+                if (name.toLowerCase().startsWith(builder.getRemainingLowerCase())) {
+                    builder.suggest(name);
+                }
+            }
+            return builder.buildFuture();
+        };
     }
 
     private static int executeHistoryList(FabricClientCommandSource source, HistoryManager historyManager, String filterName) {

@@ -8,6 +8,7 @@
   "intruderalerts.error.player_not_in_tab": "Player not found in tab list: %s",
   "intruderalerts.error.player_not_trusted": "Player not found in trust list: %s",
   "intruderalerts.error.zone_not_found": "Zone not found: %s",
+  "intruderalerts.error.ignore_not_found": "Name not in ignore list: %s",
   "intruderalerts.command.trust.success": "Trusted %s",
   "intruderalerts.command.trust.already": "%s is already trusted.",
   "intruderalerts.command.untrust.success": "Removed %s from trust list.",
@@ -28,5 +29,10 @@
   "intruderalerts.command.history.cleared": "Sighting history cleared.",
   "intruderalerts.command.history.row_open": "still here",
   "intruderalerts.command.history.exit_logout": "logged out",
-  "intruderalerts.command.history.exit_range": "left range"
+  "intruderalerts.command.history.exit_range": "left range",
+  "intruderalerts.command.ignore.added": "Ignoring %s",
+  "intruderalerts.command.ignore.exists": "%s is already ignored.",
+  "intruderalerts.command.ignore.removed": "No longer ignoring %s",
+  "intruderalerts.command.ignore.list_empty": "No ignored names.",
+  "intruderalerts.command.ignore.list_header": "Ignored names:"
 }
