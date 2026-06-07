@@ -15,13 +15,12 @@ A client-side Fabric mod that notifies you whenever an untrusted player enters y
 
 ## Supported Versions
 
-- Minecraft 1.21.4
-- Minecraft 1.21.11
+- Minecraft 26.1.2 (Java 25 required)
 
 ## Dependencies
 
-- [Fabric Loader](https://fabricmc.net/) >= 0.18.4
-- [Fabric API](https://modrinth.com/mod/fabric-api)
+- [Fabric Loader](https://fabricmc.net/) >= 0.19.3
+- [Fabric API](https://modrinth.com/mod/fabric-api) for 26.1
 
 ## Commands
 
@@ -29,6 +28,7 @@ All commands use the `/intruder` prefix:
 
 | Command | Description |
 |---|---|
+| `/intruder` | Open the in-game menu (toggle, sound, list views, test alert) |
 | `/intruder trust <player>` | Add a player to your trust list (with tab-completion) |
 | `/intruder untrust <player>` | Remove a player from your trust list |
 | `/intruder list` | Show all trusted players |
@@ -61,7 +61,27 @@ You'll only be alerted once per player — they won't trigger repeated alerts un
 ./gradlew build
 ```
 
-The output JAR will be in `build/libs/`. To switch Minecraft versions, change `minecraft_version` in `gradle.properties` to `1.21.4` or `1.21.11`.
+The output JAR will be in `build/libs/`.
+
+Gradle must run on JDK 25 (Minecraft 26.1+ requires it). If your default `java` is older, set `JAVA_HOME` to a JDK 25 install or add `org.gradle.java.home=<path>` to `~/.gradle/gradle.properties` before invoking the wrapper.
+
+## Releasing
+
+Releases are tag-driven. To cut a new release:
+
+```bash
+git tag v1.4.0
+git push origin v1.4.0
+```
+
+[`.github/workflows/release.yml`](.github/workflows/release.yml) builds the JAR (injecting the tag as `mod_version`), creates a GitHub Release with an auto-generated changelog, and publishes to Modrinth in the same run via [Kir-Antipov/mc-publish](https://github.com/Kir-Antipov/mc-publish).
+
+Modrinth publishing is skipped automatically until you set both:
+
+- Repo **variable** `MODRINTH_PROJECT_ID` → the project slug/ID
+- Repo **secret** `MODRINTH_TOKEN` → a [Modrinth PAT](https://modrinth.com/settings/pats) with `Create version` scope
+
+(Settings → Secrets and variables → Actions.)
 
 ## License
 

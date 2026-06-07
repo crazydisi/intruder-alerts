@@ -1,19 +1,20 @@
 # Gradle
 .gradle/
 build/
-gradle/wrapper/gradle-wrapper.jar
 
 # IDE
 .idea/
 *.iml
 *.ipr
 *.iws
+.vscode/
 
 # Fabric
 run/
 
 # Claude Code
 .claude/settings.local.json
+CLAUDE.local.md
 
 # OS
 .DS_Store

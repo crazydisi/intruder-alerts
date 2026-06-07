@@ -34,5 +34,19 @@
   "intruderalerts.command.ignore.exists": "%s is already ignored.",
   "intruderalerts.command.ignore.removed": "No longer ignoring %s",
   "intruderalerts.command.ignore.list_empty": "No ignored names.",
-  "intruderalerts.command.ignore.list_header": "Ignored names:"
+  "intruderalerts.command.ignore.list_header": "Ignored names:",
+  "intruderalerts.menu.title": "Intruder Alerts",
+  "intruderalerts.menu.status.enabled": "Status: Enabled",
+  "intruderalerts.menu.status.disabled": "Status: Disabled",
+  "intruderalerts.menu.toggle.enable": "Enable mod",
+  "intruderalerts.menu.toggle.disable": "Disable mod",
+  "intruderalerts.menu.sound.enable": "Enable sound alerts",
+  "intruderalerts.menu.sound.disable": "Disable sound alerts",
+  "intruderalerts.menu.show.trusted": "Show trusted players",
+  "intruderalerts.menu.show.zones": "Show ignore zones",
+  "intruderalerts.menu.show.ignored": "Show ignored names",
+  "intruderalerts.menu.show.history": "Show sighting history",
+  "intruderalerts.menu.test": "Fire test alert",
+  "intruderalerts.menu.demo_name": "DemoIntruder",
+  "intruderalerts.menu.done": "Done"
 }

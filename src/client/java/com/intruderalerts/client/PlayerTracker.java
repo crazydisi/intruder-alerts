@@ -1,9 +1,9 @@
 package com.intruderalerts.client;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.AbstractClientPlayerEntity;
-import net.minecraft.client.network.PlayerListEntry;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.PlayerInfo;
+import net.minecraft.client.player.AbstractClientPlayer;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -38,12 +38,12 @@ public class PlayerTracker {
         historyManager.closeAllOpen(HistoryManager.EXIT_OUT_OF_RANGE);
     }
 
-    private void onTick(MinecraftClient client) {
+    private void onTick(Minecraft client) {
         if (!IntruderAlertsClient.isEnabled()) {
             return;
         }
 
-        if (client.world == null || client.player == null) {
+        if (client.level == null || client.player == null) {
             if (!knownNearbyPlayers.isEmpty()) {
                 historyManager.closeAllOpen(HistoryManager.EXIT_OUT_OF_RANGE);
             }
@@ -60,8 +60,8 @@ public class PlayerTracker {
         double playerX = client.player.getX();
         double playerY = client.player.getY();
         double playerZ = client.player.getZ();
-        String dimension = client.world.getRegistryKey().getValue().toString();
-        double radius = client.options.getViewDistance().getValue() * 16.0;
+        String dimension = client.level.dimension().identifier().toString();
+        double radius = client.options.renderDistance().get() * 16.0;
 
         if (zoneManager.isInAnyZone(playerX, playerY, playerZ, dimension, radius)) {
             if (!knownNearbyPlayers.isEmpty()) {
@@ -72,18 +72,18 @@ public class PlayerTracker {
         }
 
         Set<UUID> serverPlayers = new HashSet<>();
-        if (client.getNetworkHandler() != null) {
-            for (PlayerListEntry entry : client.getNetworkHandler().getPlayerList()) {
-                serverPlayers.add(ProfileUtil.getId(entry.getProfile()));
+        if (client.getConnection() != null) {
+            for (PlayerInfo entry : client.getConnection().getOnlinePlayers()) {
+                serverPlayers.add(entry.getProfile().id());
             }
         }
 
         Set<UUID> currentPlayers = new HashSet<>();
 
-        for (AbstractClientPlayerEntity player : client.world.getPlayers()) {
-            UUID uuid = player.getUuid();
+        for (AbstractClientPlayer player : client.level.players()) {
+            UUID uuid = player.getUUID();
 
-            if (uuid.equals(client.player.getUuid())) {
+            if (uuid.equals(client.player.getUUID())) {
                 continue;
             }
 
@@ -101,7 +101,7 @@ public class PlayerTracker {
                 continue;
             }
 
-            if (player.getY() < client.world.getBottomY()) {
+            if (player.getY() < client.level.getMinY()) {
                 continue;
             }
 

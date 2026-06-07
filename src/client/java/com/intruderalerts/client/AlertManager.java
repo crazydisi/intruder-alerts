@@ -1,9 +1,11 @@
 package com.intruderalerts.client;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.toast.SystemToast;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.toasts.SystemToast;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
 
 public class AlertManager {
 
@@ -14,7 +16,7 @@ public class AlertManager {
     }
 
     public void alert(String playerName) {
-        MinecraftClient client = MinecraftClient.getInstance();
+        Minecraft client = Minecraft.getInstance();
         if (client.player == null) {
             return;
         }
@@ -26,25 +28,27 @@ public class AlertManager {
         }
     }
 
-    private void sendChatAlert(MinecraftClient client, String playerName) {
-        Text message = Text.empty()
-                .append(Text.translatable("intruderalerts.prefix").formatted(Formatting.RED, Formatting.BOLD))
-                .append(Text.translatable("intruderalerts.alert.entered_render_distance",
-                        Text.literal(playerName).formatted(Formatting.YELLOW)).formatted(Formatting.RED));
+    private void sendChatAlert(Minecraft client, String playerName) {
+        Component message = Component.empty()
+                .append(Component.translatable("intruderalerts.prefix").withStyle(ChatFormatting.RED, ChatFormatting.BOLD))
+                .append(Component.translatable("intruderalerts.alert.entered_render_distance",
+                        Component.literal(playerName).withStyle(ChatFormatting.YELLOW)).withStyle(ChatFormatting.RED));
 
-        client.inGameHud.getChatHud().addMessage(message);
+        client.gui.getChat().addClientSystemMessage(message);
     }
 
-    private void sendToastAlert(MinecraftClient client, String playerName) {
-        SystemToast.show(
+    private void sendToastAlert(Minecraft client, String playerName) {
+        SystemToast.add(
                 client.getToastManager(),
-                SystemToast.Type.PERIODIC_NOTIFICATION,
-                Text.translatable("intruderalerts.alert.toast.title"),
-                Text.translatable("intruderalerts.alert.toast.body", playerName)
+                SystemToast.SystemToastId.PERIODIC_NOTIFICATION,
+                Component.translatable("intruderalerts.alert.toast.title"),
+                Component.translatable("intruderalerts.alert.toast.body", playerName)
         );
     }
 
-    private void playSoundAlert(MinecraftClient client) {
-        SoundUtil.playAlert(client);
+    private void playSoundAlert(Minecraft client) {
+        client.getSoundManager().play(
+                SimpleSoundInstance.forUI(SoundEvents.ENDER_DRAGON_GROWL, 1.0f, 1.0f)
+        );
     }
 }
